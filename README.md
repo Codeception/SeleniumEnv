@@ -5,7 +5,7 @@ This is a Docker Image with Selenium Server, Xvfb, Firefox and Chromium installe
 
 ## Installation
 
-Grab prepacked image from a Docker Hub
+Grab prepacked [image from a Docker Hub](https://registry.hub.docker.com/u/davert/selenium-env/)
 
 ```
 docker pull davert/selenium-env
