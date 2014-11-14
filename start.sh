@@ -14,15 +14,15 @@ echo "Host IP: $HOST_IP"
 echo "$HOST_IP dockerhost" >> /etc/hosts
 
 # adding APP_HOST to list of known hosts
-if [ $APP_HOST ]; 
-then 
+if [ $APP_HOST ];
+then
   echo "Registering host $APP_HOST"
-  echo "$HOSTIP $APP_HOST" >> /etc/hosts
+  echo "$HOST_IP $APP_HOST" >> /etc/hosts
 fi;
 
 # if onlu port provided - redirect to host+port
-if [ $APP_PORT ]; 
-then 
+if [ $APP_PORT ];
+then
   echo "Registering port $APP_PORT"
   socat TCP4-LISTEN:$APP_PORT,fork,reuseaddr TCP4:dockerhost:$APP_PORT &
 fi;
