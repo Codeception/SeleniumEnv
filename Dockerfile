@@ -13,5 +13,5 @@ RUN echo 'travis ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN chef-solo -o java,xserver,firefox::tarball,chromium -j travis.json
 RUN wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar -O selenium-server.jar
 ADD start.sh start.sh
-CMD sh start.sh
+CMD bash start.sh
 EXPOSE 4444
