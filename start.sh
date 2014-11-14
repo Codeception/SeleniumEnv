@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # start Xvfb
 /usr/bin/Xvfb :99 -ac -screen 0 1024x768x24 &
@@ -14,17 +14,27 @@ echo "Host IP: $HOST_IP"
 echo "$HOST_IP dockerhost" >> /etc/hosts
 
 # adding APP_HOST to list of known hosts
-if [ $APP_HOST ]; 
-then 
-  echo "Registering host $APP_HOST"
-  echo "$HOSTIP $APP_HOST" >> /etc/hosts
+if [ $APP_HOST ];
+then
+  HOSTS=(${APP_HOST//,/ });
+
+  for i in "${!HOSTS[@]}"
+  do
+    echo "Registering host ${HOSTS[i]}"
+    echo "$HOST_IP ${HOSTS[i]}" >> /etc/hosts
+  done;
 fi;
 
-# if onlu port provided - redirect to host+port
-if [ $APP_PORT ]; 
-then 
-  echo "Registering port $APP_PORT"
-  socat TCP4-LISTEN:$APP_PORT,fork,reuseaddr TCP4:dockerhost:$APP_PORT &
+# if only port provided - redirect to host+port
+if [ $APP_PORT ];
+then
+  PORTS=(${APP_PORT//,/ });
+
+  for i in "${!PORTS[@]}"
+  do
+    echo "Registering port ${PORTS[i]}"
+    socat TCP4-LISTEN:${PORTS[i]},fork,reuseaddr TCP4:dockerhost:${PORTS[i]} &
+  done;
 fi;
 
 # starting selenium
