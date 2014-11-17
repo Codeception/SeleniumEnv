@@ -1,7 +1,12 @@
 #!/bin/bash
 
 # start Xvfb
-/usr/bin/Xvfb :99 -ac -screen 0 1024x768x24 &
+if [ ! $RESOLUTION ];
+then
+  RESOLUTION="1024x768x24"
+fi;
+echo "Running Xvfb at $RESOLUTION"
+/usr/bin/Xvfb :99 -ac -screen 0 $RESOLUTION &
 export DISPLAY=:99.0
 
 # get host ip
